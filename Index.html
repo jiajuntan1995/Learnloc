@@ -1,245 +1,1011 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fix One Skill</title>
-  <meta name="description" content="Fix one skill. Learn real skills from real people without long courses or gurus.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fix One Skill — Learn from Real People</title>
+<meta name="description" content="Fix one skill. Real coaches, real sessions, real progress. No long courses, no gurus.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --bg-dark: #1a1510;
+  --bg-card: #faf7f2;
+  --ink: #1a1510;
+  --ink-2: #4a4035;
+  --ink-3: #8a7d6e;
+  --accent: #c45c2a;
+  --accent-soft: #f0e0d5;
+  --accent-2: #2a6b5c;
+  --accent-2-soft: #d5e8e3;
+  --border: #ddd5c5;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Epilogue', system-ui, sans-serif;
+  --r: 6px;
+}
 
-  <style>
-    /* Reset & basics */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
-      color: #111;
-      background: #f9f9f9;
-      line-height: 1.6;
-    }
+html { scroll-behavior: smooth; }
 
-    a {
-      text-decoration: none;
-    }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-    /* Container */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+a { text-decoration: none; color: inherit; }
 
-    /* Hero */
-    .hero {
-      background: linear-gradient(135deg, #fffbf0 0%, #fff 100%);
-      padding: 120px 24px 80px;
-      text-align: center;
-      position: relative;
-    }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(245, 240, 232, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, background .3s;
+}
+nav.scrolled { border-color: var(--border); background: rgba(245,240,232,0.97); }
 
-    .hero h1 {
-      font-size: 4rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 24px;
-      color: #111;
-    }
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -.3px;
+}
+.nav-logo span { color: var(--accent); }
 
-    .hero p {
-      font-size: 1.25rem;
-      margin-bottom: 36px;
-      color: #333;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a { font-size: 14px; color: var(--ink-2); font-weight: 400; transition: color .2s; }
+.nav-links a:hover { color: var(--accent); }
 
-    .cta {
-      display: inline-block;
-      margin: 0 8px;
-      padding: 16px 32px;
-      font-weight: 600;
-      border-radius: 8px;
-      transition: 0.2s ease;
-      cursor: pointer;
-    }
+.nav-cta {
+  font-size: 13px; font-weight: 600;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: var(--r);
+  transition: background .2s, transform .15s;
+}
+.nav-cta:hover { background: #a84c22; transform: translateY(-1px); }
 
-    .cta.primary {
-      background: #ff6b6b;
-      color: #fff;
-    }
+/* ── TICKER ── */
+.ticker-wrap {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-top: 73px;
+}
+.ticker {
+  display: inline-flex;
+  animation: ticker 28s linear infinite;
+  gap: 0;
+}
+.ticker-inner { display: flex; gap: 0; }
+.ticker span {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  padding: 0 24px;
+  opacity: .7;
+}
+.ticker span.dot {
+  color: var(--accent);
+  opacity: 1;
+  font-size: 16px;
+  padding: 0 4px;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-    .cta.primary:hover {
-      background: #ff4c4c;
-    }
+/* ── HERO ── */
+.hero {
+  background: var(--bg-dark);
+  color: #fff;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
 
-    .cta.secondary {
-      background: transparent;
-      color: #ff6b6b;
-      border: 2px solid #ff6b6b;
-    }
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -100px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,92,42,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
 
-    .cta.secondary:hover {
-      background: #ff6b6b;
-      color: #fff;
-    }
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: 200px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(42,107,92,.15) 0%, transparent 70%);
+  pointer-events: none;
+}
 
-    /* Section Titles */
-    h2 {
-      font-size: 2.25rem;
-      font-weight: 700;
-      margin-bottom: 24px;
-      text-align: center;
-      color: #111;
-    }
+.hero-left { position: relative; z-index: 1; }
 
-    h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: #111;
-    }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 28px;
+}
+.hero-badge::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--accent);
+  display: block;
+}
 
-    p, li {
-      font-size: 1.1rem;
-      color: #333;
-      margin-bottom: 16px;
-    }
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(48px, 6vw, 76px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 28px;
+}
 
-    ul {
-      padding-left: 24px;
-      margin-bottom: 24px;
-    }
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
 
-    /* Steps */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
-    }
+.hero-sub {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,.6);
+  max-width: 420px;
+  margin-bottom: 40px;
+}
 
-    .step {
-      background: #fff;
-      padding: 28px;
-      border-radius: 12px;
-      border-left: 6px solid #ff6b6b;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+.hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 
-    .step:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-    }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 28px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px; font-weight: 600;
+  border-radius: var(--r);
+  transition: background .2s, transform .15s, box-shadow .2s;
+}
+.btn-primary:hover { background: #a84c22; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,92,42,.4); }
+.btn-primary svg { width: 16px; height: 16px; }
 
-    /* Sections */
-    .section {
-      padding: 80px 0;
-      background: #f9f9f9;
-      border-top: 1px solid #eee;
-    }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,.55);
+  transition: color .2s;
+}
+.btn-ghost:hover { color: rgba(255,255,255,.9); }
 
-    .section.alt {
-      background: #fff;
-    }
+.hero-proof {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.proof-item { text-align: left; }
+.proof-num {
+  font-family: var(--serif);
+  font-size: 28px; font-weight: 600;
+  color: #fff;
+  line-height: 1;
+}
+.proof-label { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 3px; }
+.proof-div { width: 1px; height: 36px; background: rgba(255,255,255,.1); }
 
-    /* Trial section */
-    #trial p {
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
+/* ── HERO RIGHT: coach cards ── */
+.hero-right {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+}
 
-    #trial .cta {
-      display: inline-block;
-      margin-top: 24px;
-    }
+.coach-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  padding: 20px;
+  transition: transform .3s, background .3s;
+  animation: floatUp .6s ease both;
+}
+.coach-card:hover { transform: translateY(-4px); background: rgba(255,255,255,.09); }
+.coach-card:nth-child(1) { animation-delay: .1s; }
+.coach-card:nth-child(2) { animation-delay: .2s; grid-row: span 1; margin-top: 24px; }
+.coach-card:nth-child(3) { animation-delay: .3s; }
+.coach-card:nth-child(4) { animation-delay: .4s; margin-top: -12px; }
 
-    #trial p.note {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 12px;
-    }
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    /* Footer */
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      padding: 40px 24px;
-      border-top: 1px solid #eee;
-      background: #fff;
-    }
+.coach-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  font-family: var(--serif);
+}
 
-    /* Media Queries */
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-      h2 {
-        font-size: 1.75rem;
-      }
-      .container {
-        padding: 0 16px;
-      }
-    }
-  </style>
+.coach-name { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+.coach-skill {
+  font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,.5);
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 10px;
+}
+.coach-tag {
+  display: inline-block;
+  font-size: 11px; padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.6);
+}
+
+.coach-rating {
+  display: flex; align-items: center; gap: 4px;
+  margin-top: 10px;
+}
+.stars { color: #f4b942; font-size: 12px; }
+.rating-num { font-size: 11px; color: rgba(255,255,255,.45); }
+
+/* ── SECTION BASE ── */
+.section { padding: 100px 48px; }
+.section-label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::after {
+  content: ''; flex: 1; max-width: 40px; height: 1px;
+  background: var(--accent); opacity: .5;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.section-title em { font-style: italic; font-weight: 300; }
+
+/* ── SKILLS BROWSER ── */
+#skills { background: var(--bg-card); border-top: 1px solid var(--border); }
+
+.skills-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 80px;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.skills-sub {
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: var(--ink-2);
+  margin-bottom: 32px;
+}
+
+.skill-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+
+.skill-pill {
+  font-size: 13px; font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all .2s;
+}
+.skill-pill:hover, .skill-pill.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.coaches-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.coach-list-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  cursor: pointer;
+}
+.coach-list-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.07);
+  border-color: var(--accent);
+}
+
+.clc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.clc-av {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 16px; font-weight: 600;
+  color: #fff; flex-shrink: 0;
+}
+.clc-name { font-size: 14px; font-weight: 600; margin-bottom: 1px; }
+.clc-skill { font-size: 12px; color: var(--ink-3); }
+.clc-bio { font-size: 13px; color: var(--ink-2); line-height: 1.55; margin-bottom: 12px; }
+.clc-footer { display: flex; align-items: center; justify-content: space-between; }
+.clc-rating { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 4px; }
+.clc-price { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+/* ── HOW IT WORKS ── */
+#how { background: var(--bg); }
+
+.how-layout { max-width: 1100px; margin: 0 auto; }
+.how-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 64px; }
+.how-desc { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--ink-2); }
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.how-step {
+  background: var(--bg-card);
+  padding: 36px 32px;
+  position: relative;
+  transition: background .2s;
+}
+.how-step:hover { background: #fff; }
+
+.step-num {
+  font-family: var(--serif);
+  font-size: 56px; font-weight: 600;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 20px;
+  transition: color .3s;
+}
+.how-step:hover .step-num { color: var(--accent-soft); }
+
+.step-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.step-title {
+  font-family: var(--serif);
+  font-size: 20px; font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: -.3px;
+}
+
+.step-body { font-size: 14px; line-height: 1.7; color: var(--ink-2); }
+
+/* ── TESTIMONIALS ── */
+#testimonials { background: var(--ink); color: #fff; }
+
+.testimonials-layout { max-width: 1100px; margin: 0 auto; }
+.test-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+.test-header .section-label { color: var(--accent); }
+.test-header .section-title { color: #fff; }
+.test-count { font-size: 14px; color: rgba(255,255,255,.4); font-weight: 300; }
+
+.test-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 14px;
+}
+
+.test-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 10px;
+  padding: 28px;
+  transition: background .2s;
+}
+.test-card:hover { background: rgba(255,255,255,.08); }
+.test-card.featured { grid-row: span 2; }
+
+.test-stars { color: #f4b942; font-size: 14px; margin-bottom: 16px; }
+
+.test-quote {
+  font-family: var(--serif);
+  font-size: 18px; font-weight: 300; font-style: italic;
+  line-height: 1.6; color: rgba(255,255,255,.85);
+  margin-bottom: 20px;
+}
+.test-card:not(.featured) .test-quote { font-size: 15px; }
+
+.test-author { display: flex; align-items: center; gap: 12px; }
+.test-av {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7);
+  font-family: var(--serif);
+}
+.test-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7); }
+.test-detail { font-size: 11px; color: rgba(255,255,255,.35); margin-top: 1px; }
+
+/* ── TRIAL / CTA ── */
+#trial { background: var(--bg-card); border-top: 1px solid var(--border); }
+
+.trial-layout {
+  max-width: 1100px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.trial-left .section-title { margin-bottom: 16px; }
+.trial-desc { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--ink-2); margin-bottom: 32px; }
+
+.trial-points { list-style: none; margin-bottom: 36px; }
+.trial-points li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 15px; color: var(--ink-2);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+.trial-points li:last-child { border-bottom: none; }
+.trial-points li::before {
+  content: '→'; color: var(--accent);
+  font-size: 14px; flex-shrink: 0; margin-top: 1px;
+}
+
+.trial-form-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.07);
+}
+
+.trial-form-card h3 {
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 600;
+  margin-bottom: 6px; letter-spacing: -.3px;
+}
+
+.trial-form-card p {
+  font-size: 13px; color: var(--ink-3);
+  margin-bottom: 24px; line-height: 1.5;
+}
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; font-weight: 500; color: var(--ink-2); margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px; font-family: var(--sans);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(196,92,42,.12);
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+
+.form-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px; font-weight: 600; font-family: var(--sans);
+  border: none; border-radius: var(--r);
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+  margin-top: 8px;
+}
+.form-submit:hover { background: #a84c22; transform: translateY(-1px); }
+
+.form-note { font-size: 12px; color: var(--ink-3); text-align: center; margin-top: 12px; }
+
+/* ── FOR COACHES ── */
+#coaches { background: var(--bg); border-top: 1px solid var(--border); }
+
+.coaches-layout { max-width: 1100px; margin: 0 auto; }
+.coaches-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.earn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.earn-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.earn-num {
+  font-family: var(--serif);
+  font-size: 32px; font-weight: 600;
+  color: var(--accent);
+  line-height: 1; margin-bottom: 4px;
+}
+
+.earn-label { font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+
+.coach-benefit {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.coach-benefit:last-child { border-bottom: none; }
+.benefit-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--accent-2-soft);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.benefit-title { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+.benefit-desc { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg-dark);
+  color: rgba(255,255,255,.5);
+  padding: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-family: var(--serif);
+  font-size: 20px; font-weight: 600;
+  color: rgba(255,255,255,.8);
+}
+.footer-logo span { color: var(--accent); }
+
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; transition: color .2s; }
+.footer-links a:hover { color: rgba(255,255,255,.8); }
+
+.footer-copy { font-size: 12px; }
+
+/* ── SCROLL ANIMATIONS ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 60px 24px; min-height: auto; }
+  .hero-right { display: none; }
+  .section { padding: 72px 24px; }
+  .skills-layout { grid-template-columns: 1fr; gap: 40px; }
+  .how-header { grid-template-columns: 1fr; gap: 16px; }
+  .how-steps { grid-template-columns: 1fr; }
+  .test-grid { grid-template-columns: 1fr; }
+  .test-card.featured { grid-row: auto; }
+  .trial-layout { grid-template-columns: 1fr; gap: 40px; }
+  .coaches-inner { grid-template-columns: 1fr; gap: 40px; }
+  .earn-grid { grid-template-columns: 1fr 1fr; }
+  footer { flex-direction: column; gap: 20px; text-align: center; padding: 36px 24px; }
+  .coaches-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
-
 <body>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <h1>Fix One Skill.<br />Level Up Faster.</h1>
-      <p>Learn real skills from real people — without committing to a course, a guru, or a long program.</p>
-      <a href="#trial" class="cta primary">Request a Trial Session</a>
-      <a href="#how-it-works" class="cta secondary">See How It Works</a>
-    </div>
-  </section>
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">Fix<span>.</span>One<span>Skill</span></div>
+  <div class="nav-links">
+    <a href="#skills">Browse Skills</a>
+    <a href="#how">How It Works</a>
+    <a href="#coaches">Become a Coach</a>
+  </div>
+  <a href="#trial" class="nav-cta">Book a Trial →</a>
+</nav>
 
-  <!-- How it works -->
-  <section id="how-it-works" class="section alt">
-    <div class="container">
-      <h2>How It Works</h2>
-      <div class="steps">
-        <div class="step">
-          <h3>1. Tell Us Your Skill Problem</h3>
-          <p>“I want to pick up pickleball”<br>“I want to learn video editing.”</p>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>Public Speaking</span><span class="dot">·</span>
+      <span>Excel & Data</span><span class="dot">·</span>
+      <span>Salary Negotiation</span><span class="dot">·</span>
+      <span>Pickleball</span><span class="dot">·</span>
+      <span>Video Editing</span><span class="dot">·</span>
+      <span>Python for Beginners</span><span class="dot">·</span>
+      <span>Mandarin Chinese</span><span class="dot">·</span>
+      <span>Personal Finance</span><span class="dot">·</span>
+      <span>Running Form</span><span class="dot">·</span>
+      <span>Cold Outreach</span><span class="dot">·</span>
+      <span>Cooking Basics</span><span class="dot">·</span>
+      <span>LinkedIn Writing</span><span class="dot">·</span>
+      <span>Guitar</span><span class="dot">·</span>
+      <span>Lease Negotiation</span><span class="dot">·</span>
+      <span>UI Design</span><span class="dot">·</span>
+    </div>
+    <div class="ticker-inner" aria-hidden="true">
+      <span>Public Speaking</span><span class="dot">·</span>
+      <span>Excel & Data</span><span class="dot">·</span>
+      <span>Salary Negotiation</span><span class="dot">·</span>
+      <span>Pickleball</span><span class="dot">·</span>
+      <span>Video Editing</span><span class="dot">·</span>
+      <span>Python for Beginners</span><span class="dot">·</span>
+      <span>Mandarin Chinese</span><span class="dot">·</span>
+      <span>Personal Finance</span><span class="dot">·</span>
+      <span>Running Form</span><span class="dot">·</span>
+      <span>Cold Outreach</span><span class="dot">·</span>
+      <span>Cooking Basics</span><span class="dot">·</span>
+      <span>LinkedIn Writing</span><span class="dot">·</span>
+      <span>Guitar</span><span class="dot">·</span>
+      <span>Lease Negotiation</span><span class="dot">·</span>
+      <span>UI Design</span><span class="dot">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">Peer-to-peer coaching · Singapore</div>
+    <h1>Fix <em>one skill.</em><br>From someone<br>who just did it.</h1>
+    <p class="hero-sub">Not a course. Not a guru. A real person — 1 to 3 steps ahead of you — who can show you exactly what to fix, in a single session.</p>
+    <div class="hero-actions">
+      <a href="#trial" class="btn-primary">
+        Book a Trial Session
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="#how" class="btn-ghost">See how it works ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="skills-layout">
+    <div class="fade-up">
+      <div class="section-label">Browse coaches</div>
+      <h2 class="section-title">Whatever you need to fix, there's someone who just fixed it.</h2>
+      <p class="skills-sub">We manually match you with a coach who solved your exact problem — recently, in a context close to yours. Not a textbook expert. Someone who remembers the struggle.</p>
+      <div class="skill-pills">
+        <span class="skill-pill active">All</span>
+        <span class="skill-pill">Career</span>
+        <span class="skill-pill">Tech</span>
+        <span class="skill-pill">Fitness</span>
+        <span class="skill-pill">Creative</span>
+        <span class="skill-pill">Language</span>
+        <span class="skill-pill">Finance</span>
+        <span class="skill-pill">Sports</span>
+      </div>
+    </div>
+
+    <div class="coaches-grid fade-up">
+      <div class="coach-list-card">
+        <div class="clc-header">
+          <div class="clc-av" style="background:#a84c22">M</div>
+          <div>
+            <div class="clc-name"style="filter: blur(3px);">Marcus T.</div>
+            <div class="clc-skill">Salary Negotiation</div>
+          </div>
         </div>
-        <div class="step">
-          <h3>2. We Match You</h3>
-          <p>We manually match you with a vetted coach or practitioner who has solved that exact problem.</p>
+        <div class="clc-bio">Got a 40% raise by reframing the conversation entirely. Now helps people prepare, script, and rehearse their ask.</div>
+        <div class="clc-footer">
+          <div class="clc-rating"><span style="color:#f4b942">★</span> 4.9 · 34 sessions</div>
+          <div class="clc-price">From $45</div>
         </div>
-        <div class="step">
-          <h3>3. Start with a Trial</h3>
-          <p>Have a focused trial session to understand what’s holding you back and what to work on next.</p>
+      </div>
+
+      <div class="coach-list-card">
+        <div class="clc-header">
+          <div class="clc-av" style="background:#2a6b5c">J</div>
+          <div>
+            <div class="clc-name"style="filter: blur(3px);">Jess L.</div>
+            <div class="clc-skill">Video Editing</div>
+          </div>
+        </div>
+        <div class="clc-bio">10k YouTube subscriber channel built from scratch in 8 months. Teaches pacing, cuts, and the colour grade that makes everything look intentional.</div>
+        <div class="clc-footer">
+          <div class="clc-rating"><span style="color:#f4b942">★</span> 4.8 · 61 sessions</div>
+          <div class="clc-price">From $40</div>
+        </div>
+      </div>
+
+      <div class="coach-list-card">
+        <div class="clc-header">
+          <div class="clc-av" style="background:#4a6b2a">R</div>
+          <div>
+            <div class="clc-name"style="filter: blur(3px);">Rajan K.</div>
+            <div class="clc-skill">Python for Beginners</div>
+          </div>
+        </div>
+        <div class="clc-bio">Career-switched from finance into data in 11 months. Teaches the 20% of Python that gets you 80% of results — no computer science required.</div>
+        <div class="clc-footer">
+          <div class="clc-rating"><span style="color:#f4b942">★</span> 4.9 · 28 sessions</div>
+          <div class="clc-price">From $35</div>
+        </div>
+      </div>
+
+      <div class="coach-list-card">
+        <div class="clc-header">
+          <div class="clc-av" style="background:#6b2a4a">S</div>
+          <div>
+            <div class="clc-name" style="filter: blur(3px);">Sarah N.</div>
+            <div class="clc-skill">Public Speaking</div>
+          </div>
+        </div>
+        <div class="clc-bio">Former TEDx speaker and ex-anxious presenter. Helps people get through their first 60 seconds without going blank.</div>
+        <div class="clc-footer">
+          <div class="clc-rating"><span style="color:#f4b942">★</span> 4.7 · 89 sessions</div>
+          <div class="clc-price">From $50</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-<!-- Trial / Conversion -->
-<section id="trial" class="section alt">
-  <div class="container" style="text-align: center;">
-    <h2>Start with a Trial Session</h2>
-    <p>We’re onboarding learners manually to make sure each match is a good fit. Your first session is a trial — designed to be useful on its own, not a sales call.</p>
-    <p>If it helps, you can continue. If not, you walk away with clarity.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdh0SCVb_Cr_Lwy-sAnEj7qPSFK9LYU9z9oJj5WAe9QWTSqDQ/viewform" class="cta primary" style="display: inline-block; margin-top: 24px;">Request a Trial Session</a>
-    <p class="note" style="margin-top: 12px; font-size: 0.9rem; color: #666;">No obligation. No pressure. Just progress.</p>
+<!-- HOW IT WORKS -->
+<section id="how" class="section" style="background:var(--bg-card); border-top:1px solid var(--border)">
+  <div class="how-layout">
+    <div class="how-header fade-up">
+      <div>
+        <div class="section-label">The process</div>
+        <h2 class="section-title">One skill.<br><em>One session.</em><br>Real progress.</h2>
+      </div>
+      <p class="how-desc">No intake forms the length of a job application. No "discovery calls" that are really sales calls. You tell us what you need, we match you with the right person, and you have a session that is useful on its own — even if you never come back.</p>
+    </div>
+
+    <div class="how-steps fade-up">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-icon">🎯</div>
+        <div class="step-title">Name your skill problem</div>
+        <p class="step-body">"I freeze when I present to senior stakeholders." "I want to pick up pickleball before my friend's birthday game." Specific problems get better matches. We don't need your résumé.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔍</div>
+        <div class="step-title">We match you manually</div>
+        <p class="step-body">A human reviews your request and selects a coach who solved exactly this problem — recently. We introduce you within 24 hours. No algorithm, no random browsing.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-icon">✨</div>
+        <div class="step-title">Have a session that actually helps</div>
+        <p class="step-body">Your trial session is designed to be useful on its own. You leave with a diagnosis and a clear next step — not a 12-week plan and an upsell. If you want to continue, great. If not, you still got value.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 
-  <!-- Footer -->
-  <footer>
-    © 2026 · Singapore ·  <a href="https://docs.google.com/forms/d/e/1FAIpQLSf_gykgEpD2et7fN0k71tb_E89o3gPO-kek-kHkJnMN1fCEeA/viewform?usp=sharing&ouid=115426387845297144682">Join as a Coach</a> · Contact
-  </footer>
 
+<!-- TRIAL -->
+<section id="trial" class="section">
+  <div class="trial-layout">
+    <div class="trial-left fade-up">
+      <div class="section-label">Start here</div>
+      <h2 class="section-title">A trial session is useful <em>on its own.</em></h2>
+      <p class="trial-desc">We're still manually matching each learner to make sure the fit is right. Your first session is a trial. You pay a small fee, have a focused 45-minute session, and walk away with at least one concrete thing to apply.</p>
+      <ul class="trial-points">
+        <li>Tell us your skill problem in plain language</li>
+        <li>We match you within 24 hours</li>
+        <li>1 session, focused on your specific gap</li>
+      </ul>
+    </div>
+
+	<div class="fade-up">
+	  <div class="trial-form-card">
+		<h3>Request your trial session</h3>
+		<p>We'll review your request and match you manually within 24 hours.</p>
+
+		<!-- Wrap in a form tag with your Formspree endpoint -->
+		<form action="https://formspree.io/f/meengggv" method="POST">
+		  
+		  <div class="form-group">
+			<label>Your name</label>
+			<!-- Added name="name" -->
+			<input type="text" id="f-name" name="name" placeholder="e.g. Jamie Chen" required>
+		  </div>
+
+		  <div class="form-group">
+			<label>Email address</label>
+			<!-- Added name="email" -->
+			<input type="email" id="f-email" name="email" placeholder="you@email.com" required>
+		  </div>
+
+		  <div class="form-group">
+			<label>What skill do you want to fix?</label>
+			<!-- Added name="skill" -->
+			<textarea id="f-skill" name="skill" placeholder="e.g. I want to get better at presenting to senior stakeholders..." required></textarea>
+		  </div>
+
+		  <div class="form-group">
+			<label>How urgent is this?</label>
+			<!-- Added name="urgency" -->
+			<select id="f-urgency" name="urgency" required>
+			  <option value="">Select one</option>
+			  <option value="This week">This week</option>
+			  <option value="Within 2 weeks">Within 2 weeks</option>
+			  <option value="Within a month">Within a month</option>
+			  <option value="No rush">No rush, just exploring</option>
+			</select>
+		  </div>
+
+		  <!-- Change button type to submit -->
+		  <button type="submit" class="form-submit" id="form-btn">Submit Request →</button>
+		  <p class="form-note" id="form-msg">No obligation. Response within 24 hours.</p>
+		  
+		</form>
+	  </div>
+	</div>
+  </div>
+</section>
+
+<!-- FOR COACHES -->
+<section id="coaches" class="section" style="background: var(--bg-card); border-top: 1px solid var(--border);">
+  <div class="coaches-layout">
+    <div class="coaches-inner">
+      <div class="fade-up">
+        <div class="section-label">For coaches</div>
+        <h2 class="section-title">You know something <em>valuable.</em> Teach it.</h2>
+        <p style="font-size:16px;font-weight:300;line-height:1.8;color:var(--ink-2);margin-bottom:28px;">You don't need credentials. You need to have solved a problem someone else is struggling with right now. If you've done that — in your career, your sport, your craft — you can earn by sharing it.</p>
+
+        <div>
+          <div class="coach-benefit">
+            <div class="benefit-icon">🕐</div>
+            <div>
+              <div class="benefit-title">Set your own schedule and rate</div>
+              <div class="benefit-desc">Sessions only happen when you're available. Price your own time. Pause or stop anytime.</div>
+            </div>
+          </div>
+          <div class="coach-benefit">
+            <div class="benefit-icon">🤝</div>
+            <div>
+              <div class="benefit-title">We handle matching and admin</div>
+              <div class="benefit-desc">You don't market yourself. We bring the learner to you, matched to your specific experience.</div>
+            </div>
+          </div>
+          <div class="coach-benefit">
+            <div class="benefit-icon">💳</div>
+            <div>
+              <div class="benefit-title">Get paid per session</div>
+              <div class="benefit-desc">Automatic payout after each session. No invoices. No chasing. You keep 80–87% of what you charge.</div>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf_gykgEpD2et7fN0k71tb_E89o3gPO-kek-kHkJnMN1fCEeA/viewform?usp=sharing" class="btn-primary" style="margin-top:28px;display:inline-flex;background:var(--accent-2)">
+          Apply as a coach →
+        </a>
+      </div>
+
+      <div class="earn-grid fade-up">
+        <div class="earn-card">
+          <div class="earn-num">$800</div>
+          <div class="earn-label">Avg monthly earnings for active coaches (4 sessions/wk)</div>
+        </div>
+        <div class="earn-card">
+          <div class="earn-num">87%</div>
+          <div class="earn-label">Revenue share you keep as a Top Coach</div>
+        </div>
+        <div class="earn-card">
+          <div class="earn-num">&lt;24h</div>
+          <div class="earn-label">How fast we send your first learner match</div>
+        </div>
+        <div class="earn-card">
+          <div class="earn-num">0</div>
+          <div class="earn-label">Credentials, degrees, or experience years required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Fix<span>.</span>One<span>Skill</span></div>
+  <div class="footer-links">
+    <a href="#trial">Book a session</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSf_gykgEpD2et7fN0k71tb_E89o3gPO-kek-kHkJnMN1fCEeA/viewform?usp=sharing">Join as a coach</a>
+    <a href="mailto:hello@fixoneskill.com">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 · Fix One Skill · Singapore</div>
+</footer>
+
+<script>
+// Nav scroll state
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach((el, i) => {
+  el.style.transitionDelay = (i % 3) * 0.1 + 's';
+  observer.observe(el);
+});
+
+// Skill pill filter (UI only — demo)
+document.querySelectorAll('.skill-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.skill-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+
+// Form → mailto handler
+
+</script>
 </body>
 </html>
