@@ -1144,7 +1144,7 @@ function buildCard(coach) {
   card.dataset.avcolor  = coach.avColor;
   card.dataset.initial  = coach.initial;
   card.dataset.bioFull  = coach.bioFull;
-
+  card.dataset.slug = coach.slug;
   const categoryLabel = coach.category.charAt(0).toUpperCase() + coach.category.slice(1);
 
   card.innerHTML = `
