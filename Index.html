@@ -1244,9 +1244,12 @@ const modal      = document.getElementById('coach-modal');
 const modalClose = document.getElementById('modal-close');
 
 function openModal(card) {
+	
   document.getElementById('modal-av').style.background = card.dataset.avcolor;
   document.getElementById('modal-av').textContent      = card.dataset.initial;
   document.getElementById('modal-name').textContent    = card.dataset.name;
+  document.getElementById('modal-name').innerHTML =
+  `<a href="/coach/${card.dataset.slug}" style="color:inherit;text-decoration:underline;cursor:pointer">${card.dataset.name}</a>`;
   document.getElementById('modal-skill').textContent   = card.dataset.skill;
   document.getElementById('modal-meta').textContent    =
     '★ ' + card.dataset.rating + '  ·  ' + card.dataset.sessions + ' sessions completed';
