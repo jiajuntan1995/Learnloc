@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach Profile — Fix One Skill</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8; --bg-dark: #1a1510; --bg-card: #faf7f2;
+  --ink: #1a1510; --ink-2: #4a4035; --ink-3: #8a7d6e;
+  --accent: #c45c2a; --accent-soft: #f0e0d5;
+  --accent-2: #2a6b5c; --accent-2-soft: #d5e8e3;
+  --border: #ddd5c5;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Epilogue', system-ui, sans-serif;
+  --r: 6px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(245,240,232,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: var(--serif); font-size: 18px; font-weight: 600; }
+.nav-logo span { color: var(--accent); }
+.nav-back { font-size: 13px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; transition: color .2s; }
+.nav-back:hover { color: var(--accent); }
+.nav-cta { font-size: 13px; font-weight: 600; padding: 10px 20px; background: var(--accent); color: #fff; border-radius: var(--r); transition: background .2s; }
+.nav-cta:hover { background: #a84c22; }
+
+.profile-hero {
+  margin-top: 73px; background: var(--bg-dark);
+  padding: 72px 48px 64px; position: relative; overflow: hidden;
+}
+.profile-hero::before {
+  content: ''; position: absolute; top: -150px; right: -80px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,92,42,.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.profile-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 40px; align-items: center;
+}
+.profile-avatar {
+  width: 96px; height: 96px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 38px; font-weight: 600;
+  color: #fff; flex-shrink: 0; border: 3px solid rgba(255,255,255,.12);
+}
+.profile-meta { color: #fff; }
+.profile-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: 10px;
+}
+.profile-badge::before { content: ''; width: 16px; height: 1px; background: var(--accent); display: block; }
+.profile-name { font-family: var(--serif); font-size: clamp(28px,4vw,42px); font-weight: 600; letter-spacing: -.8px; line-height: 1.1; margin-bottom: 6px; }
+.profile-skill { font-size: 16px; color: rgba(255,255,255,.55); font-weight: 300; }
+.profile-stats { display: flex; flex-direction: column; gap: 16px; text-align: right; }
+.stat-num { font-family: var(--serif); font-size: 26px; font-weight: 600; color: #fff; line-height: 1; }
+.stat-label { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 3px; }
+
+.profile-body {
+  max-width: 1000px; margin: 0 auto;
+  padding: 64px 48px;
+  display: grid; grid-template-columns: 1fr 340px;
+  gap: 64px; align-items: start;
+}
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); opacity: .5; }
+.about-text { font-size: 16px; font-weight: 300; line-height: 1.85; color: var(--ink-2); margin-bottom: 32px; }
+
+.book-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.07);
+  position: sticky; top: 96px;
+}
+.book-price { font-family: var(--serif); font-size: 36px; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+.book-price-note { font-size: 13px; color: var(--ink-3); margin-bottom: 20px; }
+.book-divider { height: 1px; background: var(--border); margin: 20px 0; }
+.book-detail { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-2); padding: 6px 0; }
+.book-detail strong { color: var(--ink); font-weight: 600; }
+.book-btn {
+  display: block; width: 100%; margin-top: 20px; padding: 15px;
+  background: var(--accent); color: #fff; font-size: 15px; font-weight: 600;
+  font-family: var(--sans); border: none; border-radius: var(--r);
+  cursor: pointer; text-align: center; transition: background .2s, transform .15s;
+}
+.book-btn:hover { background: #a84c22; transform: translateY(-1px); }
+.book-note { font-size: 12px; color: var(--ink-3); text-align: center; margin-top: 12px; }
+.book-rating { display: flex; align-items: center; gap: 8px; padding: 14px 16px; background: var(--bg); border-radius: 8px; margin-bottom: 20px; }
+.book-stars { color: #f4b942; font-size: 15px; }
+.book-rating-text { font-size: 13px; color: var(--ink-2); }
+.book-rating-text strong { color: var(--ink); }
+
+.not-found { max-width: 480px; margin: 160px auto; text-align: center; padding: 0 24px; }
+.not-found h2 { font-family: var(--serif); font-size: 36px; font-weight: 600; margin-bottom: 12px; }
+.not-found p { font-size: 16px; color: var(--ink-2); margin-bottom: 28px; }
+.not-found a { display: inline-block; padding: 14px 24px; background: var(--accent); color: #fff; border-radius: var(--r); font-weight: 600; font-size: 14px; }
+
+.skeleton { background: linear-gradient(90deg, #e8e0d4 25%, #f0e8dc 50%, #e8e0d4 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 6px; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+footer { background: var(--bg-dark); color: rgba(255,255,255,.5); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; }
+.footer-logo { font-family: var(--serif); font-size: 18px; font-weight: 600; color: rgba(255,255,255,.8); }
+.footer-logo span { color: var(--accent); }
+.footer-copy { font-size: 12px; }
+
+.fade-up { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .profile-hero { padding: 48px 20px 40px; }
+  .profile-inner { grid-template-columns: 1fr; gap: 20px; }
+  .profile-stats { flex-direction: row; text-align: left; gap: 24px; }
+  .profile-body { grid-template-columns: 1fr; padding: 40px 20px; gap: 32px; }
+  .book-card { position: static; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Fix<span>.</span>One<span>Skill</span></a>
+  <a href="/#skills" class="nav-back">← All coaches</a>
+  <a href="/#trial" class="nav-cta">Book Trial →</a>
+</nav>
+
+<div id="app">
+  <!-- Loading skeleton -->
+  <div class="profile-hero">
+    <div class="profile-inner">
+      <div class="skeleton" style="width:96px;height:96px;border-radius:50%"></div>
+      <div>
+        <div class="skeleton" style="width:120px;height:12px;margin-bottom:16px"></div>
+        <div class="skeleton" style="width:260px;height:36px;margin-bottom:12px"></div>
+        <div class="skeleton" style="width:180px;height:18px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Fix<span>.</span>One<span>Skill</span></div>
+  <div class="footer-copy">© 2026 · Fix One Skill · Singapore</div>
+</footer>
+
+<script>
+const API_BASE = 'https://skillloc.genotabby.workers.dev';
+const slug = window.location.pathname.split('/').filter(Boolean)[1];
+
+async function load() {
+  const app = document.getElementById('app');
+
+  if (!slug) {
+    renderNotFound(app);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/api/coaches/${slug}`);
+    if (res.status === 404) { renderNotFound(app); return; }
+    if (!res.ok) throw new Error();
+    const coach = await res.json();
+    renderProfile(app, coach);
+  } catch {
+    app.innerHTML = `<div class="not-found"><h2>Something went wrong.</h2><p>Could not load this profile.</p><a href="/#skills">Browse all coaches →</a></div>`;
+  }
+}
+
+function renderNotFound(app) {
+  app.innerHTML = `<div class="not-found"><h2>Coach not found.</h2><p>This profile doesn't exist — or the link might be wrong.</p><a href="/#skills">Browse all coaches →</a></div>`;
+}
+
+function renderProfile(app, c) {
+  document.title = `${c.name} — Fix One Skill`;
+  const categoryLabel = c.category.charAt(0).toUpperCase() + c.category.slice(1);
+
+  app.innerHTML = `
+    <div class="profile-hero">
+      <div class="profile-inner">
+        <div class="profile-avatar" style="background:${c.avColor}">${c.initial}</div>
+        <div class="profile-meta">
+          <div class="profile-badge">${categoryLabel}</div>
+          <div class="profile-name">${c.name}</div>
+          <div class="profile-skill">${c.skill}</div>
+        </div>
+        <div class="profile-stats">
+          <div><div class="stat-num">★ ${c.rating}</div><div class="stat-label">Rating</div></div>
+          <div><div class="stat-num">${c.sessions}</div><div class="stat-label">Sessions</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <div class="fade-up">
+        <div class="section-label">About</div>
+        <p class="about-text">${c.bioFull}</p>
+      </div>
+
+      <div class="fade-up" id="book">
+        <div class="book-card">
+          <div class="book-rating">
+            <div class="book-stars">★★★★★</div>
+            <div class="book-rating-text"><strong>${c.rating}</strong> · ${c.sessions} sessions</div>
+          </div>
+          <div class="book-price">S$${c.price}</div>
+          <div class="book-price-note">per trial session · 45 minutes</div>
+          <div class="book-divider"></div>
+          <div class="book-detail"><span>Format</span><strong>1-on-1 video call</strong></div>
+          <div class="book-detail"><span>Duration</span><strong>45 minutes</strong></div>
+          <div class="book-detail"><span>Matching</span><strong>Within 24 hours</strong></div>
+          <div class="book-detail"><span>Skill</span><strong>${c.skill}</strong></div>
+          <a href="/#trial" class="book-btn">Request This Coach →</a>
+          <p class="book-note">We'll confirm availability within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = i * 0.1 + 's';
+    observer.observe(el);
+  });
+}
+
+load();
+</script>
+</body>
+</html>
