@@ -58,9 +58,54 @@ export default {
           rating:     row.rating,
           sessions:   row.sessions,
           price:      row.price_sgd,
+          slug:       row.slug,
         }));
 
         return new Response(JSON.stringify(coaches), {
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        });
+      } catch (err) {
+        console.error('D1 error:', err);
+        return new Response(JSON.stringify({ error: 'Database error' }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        });
+      }
+    }
+
+    // ── Route: GET /api/coaches/:slug ───────────────────────────
+    const slugMatch = url.pathname.match(/^\/api\/coaches\/([^/]+)$/);
+    if (request.method === 'GET' && slugMatch) {
+      const slug = slugMatch[1];
+
+      try {
+        const row = await env.DB.prepare(
+          `SELECT * FROM coaches WHERE slug = ? AND active = 1 LIMIT 1`
+        ).bind(slug).first();
+
+        if (!row) {
+          return new Response(JSON.stringify({ error: 'Coach not found' }), {
+            status: 404,
+            headers: { 'Content-Type': 'application/json', ...corsHeaders },
+          });
+        }
+
+        const coach = {
+          id:       row.id,
+          name:     row.name,
+          initial:  row.initial,
+          avColor:  row.av_color,
+          skill:    row.skill,
+          category: row.category,
+          bioShort: row.bio_short,
+          bioFull:  row.bio_full,
+          rating:   row.rating,
+          sessions: row.sessions,
+          price:    row.price_sgd,
+          slug:     row.slug,
+        };
+
+        return new Response(JSON.stringify(coach), {
           headers: { 'Content-Type': 'application/json', ...corsHeaders },
         });
       } catch (err) {
